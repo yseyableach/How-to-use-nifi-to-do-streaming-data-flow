@@ -1,0 +1,48 @@
+
+version: "3.7"
+services:
+    python_env:
+        build : python_check_can_connect/.
+        depends_on:
+            - db
+        environment:
+            TZ: Asia/Taipei
+    nifi :
+        build : ./
+        ports:
+            - "8080:8080"
+        depends_on:
+            - db
+        environment:
+            TZ: Asia/Taipei
+    db:
+        image: postgres:13.2-alpine
+        restart: always
+        environment:
+            POSTGRES_DB: postgres
+            POSTGRES_USER: jay #postgres
+            POSTGRES_PASSWORD: 1234 #1234
+            PGDATA: /var/lib/postgresql/data
+        volumes:
+            - db-data:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+        environment:
+            TZ: Asia/Taipei
+    pgadmin:
+        image: dpage/pgadmin4:latest
+        restart: always
+        environment:
+            PGADMIN_DEFAULT_EMAIL: jay@gmail.com
+            PGADMIN_DEFAULT_PASSWORD: 1234
+            PGADMIN_LISTEN_PORT: 80
+        ports:
+            - "8088:80"
+        volumes:
+            - pgadmin-data:/var/lib/pgadmin
+        links:
+            - "db:pgsql-server"
+volumes:
+    db-data:
+    pgadmin-data:
+    nifi:
