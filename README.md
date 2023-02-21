@@ -64,8 +64,12 @@
     select * from iriss
     ```
     ![put sql](image/result.png)
+- You can monitor when the JSON file comes to your file system, use the instructions below to monitor when the data comes in.
+    ```
+    docker cp iris.json (containerID):/opt/nifi/iris.json
+    ```
 
 
 ### Conclusion
-- in this lab, I show you how to use nifi to do streaming task when the file come to your file system then it will upload the result to the database.
-- you also can get files from your datalake like: AWS S3, Azure Blob and upload your result to any kind of relational database.
+- in this lab, I show you how to use nifi to do the streaming task when the file come to your file system then it will upload the result to the database.
+- you also can get files from your datalake like AWS S3, Azure Blob and upload your result to any kind of relational database.
